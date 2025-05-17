@@ -17,7 +17,7 @@ const ThemeToggler = () => {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <div className="fixed top-15 right-15 z-50">
+    <div className="fixed top-4 right-4 z-50">
       <button
         onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
         aria-label="Toggle Dark Mode"

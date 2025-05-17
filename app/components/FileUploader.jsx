@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ThemeToggler from "./ThemeToggler";
 
-
 const Confetti = ({ show }) => {
   const confettiCount = 120;
   const [particles, setParticles] = useState([]);
@@ -18,7 +17,6 @@ const Confetti = ({ show }) => {
       "#FFC4D6", "#B0E0E6", "#D1C4E9", "#FFDAB9", "#B2DFDB",
       "#F8BBD0", "#BBDEFB", "#C8E6C9", "#FFF9C4", "#E1BEE7"
     ];
-
 
     const newParticles = Array.from({ length: confettiCount }).map(() => ({
       id: Math.random().toString(36).substr(2, 9),
@@ -95,7 +93,7 @@ const Confetti = ({ show }) => {
   );
 };
 
-<ThemeToggler/>
+<ThemeToggler />;
 
 const FileUploader = () => {
   const [file, setFile] = useState(null);
@@ -106,7 +104,6 @@ const FileUploader = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [theme, setTheme] = useState("light");
   const fileInputRef = useRef();
-  
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -127,17 +124,12 @@ const FileUploader = () => {
       return;
     }
 
+    const url = URL.createObjectURL(selectedFile);
     setFile(selectedFile);
+    setPreviewUrl(url);
     setMessage("");
     setProgress(0);
     setShowConfetti(false);
-
-    if (ext === "pdf") {
-      const url = URL.createObjectURL(selectedFile);
-      setPreviewUrl(url);
-    } else {
-      setPreviewUrl("");
-    }
   };
 
   const handleConvert = async () => {
@@ -167,8 +159,8 @@ const FileUploader = () => {
 
     try {
       const xhr = new XMLHttpRequest();
-
       const apiUrl = `https://api.cloudmersive.com/convert/${endpoint}`;
+
       xhr.open("POST", apiUrl);
       xhr.setRequestHeader(
         "Apikey",
@@ -199,7 +191,6 @@ const FileUploader = () => {
           setMessage("Conversion successful!");
           setShowConfetti(true);
 
-          // Play clapping sound
           const audio = new Audio("/clapping.wav");
           audio.volume = 0.8;
           audio.play();
@@ -266,13 +257,23 @@ const FileUploader = () => {
           </div>
         )}
 
-        {previewUrl && (
+        {file && (
           <div className="w-full h-64 mb-4 border rounded-xl overflow-hidden">
-            <iframe
-              src={previewUrl}
-              title="PDF Preview"
-              className="w-full h-full"
-            />
+            {file.name.endsWith(".pdf") ? (
+              <iframe
+                src={previewUrl}
+                title="PDF Preview"
+                className="w-full h-full"
+              />
+            ) : (
+              <iframe
+                src={`https://docs.google.com/gview?url=${encodeURIComponent(
+                  previewUrl
+                )}&embedded=true`}
+                title="Word Preview"
+                className="w-full h-full"
+              />
+            )}
           </div>
         )}
 
