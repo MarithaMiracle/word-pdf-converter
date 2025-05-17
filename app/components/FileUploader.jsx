@@ -98,11 +98,9 @@ const Confetti = ({ show }) => {
 const FileUploader = () => {
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [previewUrl, setPreviewUrl] = useState("");
   const [message, setMessage] = useState("");
   const [isConverting, setIsConverting] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [theme, setTheme] = useState("light");
   const fileInputRef = useRef();
 
   const handleDrop = (e) => {
@@ -124,9 +122,7 @@ const FileUploader = () => {
       return;
     }
 
-    const url = URL.createObjectURL(selectedFile);
     setFile(selectedFile);
-    setPreviewUrl(url);
     setMessage("");
     setProgress(0);
     setShowConfetti(false);
@@ -257,26 +253,6 @@ const FileUploader = () => {
           </div>
         )}
 
-        {file && (
-          <div className="w-full h-64 mb-4 border rounded-xl overflow-hidden">
-            {file.name.endsWith(".pdf") ? (
-              <iframe
-                src={previewUrl}
-                title="PDF Preview"
-                className="w-full h-full"
-              />
-            ) : (
-              <iframe
-                src={`https://docs.google.com/gview?url=${encodeURIComponent(
-                  previewUrl
-                )}&embedded=true`}
-                title="Word Preview"
-                className="w-full h-full"
-              />
-            )}
-          </div>
-        )}
-
         <button
           onClick={handleConvert}
           disabled={isConverting || !file}
@@ -306,3 +282,5 @@ const FileUploader = () => {
 };
 
 export default FileUploader;
+
+// Note: The above code is a React component for a file uploader that converts DOC/DOCX files to PDF and vice versa. It includes drag-and-drop functionality, progress indication, and confetti animation on successful conversion. The component uses the Cloudmersive API for file conversion and handles errors gracefully.
