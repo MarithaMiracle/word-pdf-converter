@@ -21,8 +21,14 @@ MARIPDF created by Maritha is a sleek, user-friendly web application that allows
 🛠 Tech Stack
 
 Next.js 13+ (App Router)
+
 React
+
 Tailwind CSS
+
 Cloudmersive Convert API
+
 Custom Confetti Animation
+
 Client-side File Handling
+
